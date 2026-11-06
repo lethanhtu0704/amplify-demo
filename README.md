@@ -34,8 +34,10 @@ the API is a public fake API (jsonplaceholder) or the mock Lambda in `mock-api/`
     rm -rf out dist static-deploy.zip
     NEXT_PUBLIC_APP_ENV=static-demo npm run build
     mkdir -p dist/faber-admin && cp -r out/. dist/faber-admin/
-    cd dist && zip -r ../static-deploy.zip . && cd ..
-    # Windows PowerShell: Compress-Archive -Path dist\* -DestinationPath static-deploy.zip
+    python -I scripts/package_zip.py dist static-deploy.zip
+
+Do not use PowerShell 5.1 `Compress-Archive`: it stores paths with backslashes
+(`faber-admin\index.html`). Amplify then serves every URL as 404.
 
 The zip contains a `faber-admin/` folder, so URLs match `basePath` without rewrite rules.
 In Amplify add only:
