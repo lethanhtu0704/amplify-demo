@@ -1,10 +1,14 @@
 import type { NextConfig } from 'next';
 
-// Same basePath as FaberAdminUI so we can verify Amplify handles it.
+// Static export variant (branch `static`): same basePath as FaberAdminUI,
+// but output is plain HTML/JS/CSS in `out/` with no Node server.
 const nextConfig: NextConfig = {
   basePath: '/faber-admin',
-  // NOTE: no `output: 'standalone'` on purpose. Amplify uses its own build adapter.
-  // Part of the research: check whether Amplify needs/accepts standalone.
+  output: 'export',
+  // Emit /env-demo/index.html instead of /env-demo.html so Amplify serves clean URLs.
+  trailingSlash: true,
+  // The image optimizer needs a server; static export requires this.
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

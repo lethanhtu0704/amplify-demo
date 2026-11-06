@@ -1,12 +1,11 @@
 import Link from 'next/link';
 
-// Read env vars at request time to see what is available at runtime.
-export const dynamic = 'force-dynamic';
-
+// Static export: every value below is read at BUILD time and baked into the HTML.
+// There is no server at runtime, so server-only env vars cannot change after build.
 export default function EnvDemo() {
   return (
     <main>
-      <h1>Environment variable demo</h1>
+      <h1>Environment variable demo (static export)</h1>
       <table cellPadding={6} border={1}>
         <tbody>
           <tr>
@@ -14,19 +13,19 @@ export default function EnvDemo() {
             <td>{process.env.NEXT_PUBLIC_DEMO_VAR ?? '(undefined)'}</td>
           </tr>
           <tr>
-            <td>DEMO_SERVER_VAR (server only, read at runtime)</td>
+            <td>DEMO_SERVER_VAR (read at build time only)</td>
             <td>{process.env.DEMO_SERVER_VAR ?? '(undefined)'}</td>
           </tr>
           <tr>
             <td>NODE_ENV</td>
             <td>{process.env.NODE_ENV}</td>
           </tr>
+          <tr>
+            <td>Built at</td>
+            <td>{new Date().toISOString()}</td>
+          </tr>
         </tbody>
       </table>
-      <p>
-        If DEMO_SERVER_VAR is undefined on Amplify even though it is set in the console,
-        see the env step in amplify.yml.
-      </p>
       <p><Link href="/">Back</Link></p>
     </main>
   );

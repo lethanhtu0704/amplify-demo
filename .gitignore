@@ -4,3 +4,6 @@ node_modules
 !.env.example
 next-env.d.ts
 *.log
+out
+dist
+*.zip

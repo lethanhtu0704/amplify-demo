@@ -1,4 +1,6 @@
 version: 1
+# Static export variant (branch `static`). Only used if this branch is connected to
+# Amplify through Git; the research deploys it manually with out.zip instead.
 frontend:
   phases:
     preBuild:
@@ -6,12 +8,9 @@ frontend:
         - npm ci
     build:
       commands:
-        # Amplify env vars are available at BUILD time only. To make server-side
-        # vars readable at runtime in SSR, write them into .env.production.
-        - env | grep -e DEMO_ >> .env.production
         - npm run build
   artifacts:
-    baseDirectory: .next
+    baseDirectory: out
     files:
       - '**/*'
   cache:
